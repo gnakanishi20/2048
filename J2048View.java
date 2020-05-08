@@ -9,7 +9,16 @@ public class J2040View {
 	
 	// Constructors
 	
-	// Methods
-	// Draws the board.
+	// Iterate over each element of board and print its value to the screen.
+	// If the value is 0, print a "–" instead.
 	public void draw(int[] board)
+	
+	//prints the score (view.printScore(model.getScore());)
+	public void printScore(int score)
+	
+	//prints if you win or not 
+	public void win(boolean win)
+	
+	//prints when you lose
+	public void lose(boolean lose)
 }

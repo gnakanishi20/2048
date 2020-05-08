@@ -5,5 +5,7 @@
 public class J2048Controller {
 	public static void main(String[] args) {
 		
+		
+		
 	}
 }
