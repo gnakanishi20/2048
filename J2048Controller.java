@@ -17,6 +17,7 @@ public class J2048Controller {
 		{
 			view.draw(board);
 			model.move(board);
+			model.spawn(board);
 			view.printScore(model.getScore());
 			if(model.getLose(board) == true)
 			{
