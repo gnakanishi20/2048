@@ -6,7 +6,7 @@ public class J2048Controller {
 	public static void main(String[] args) 
 	{
 		int DIM = 4;
-		int[] board = new int[DIM];
+		int[][] board = new int[DIM][DIM];
 		J2048Model model = new J2048Model(DIM);
 		J2048View view = new J2048View(DIM);
 		boolean lose = false;
@@ -19,6 +19,7 @@ public class J2048Controller {
 			if(model.getLose(board) == true)
 			{
 				view.lose(model.getLose(board));
+				view.printFinalScore(model.getScore());
 				lose = true;
 				break;
 			}

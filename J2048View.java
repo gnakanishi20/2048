@@ -22,18 +22,22 @@ public class J2048View {
 	
 	// Iterate over each element of board and print its value to the screen.
 	// If the value is 0, print a "–" instead.
-	public void draw(int[] board)
+	public void draw(int[][] board)
 	{
 		for(int i = 0; i < DIM; i++)
 		{
-			if(board[i] == 0)
+			for(int j = 0; j < DIM; j++)
 			{
-				System.out.printf("%4c", '-');
+				if(board[i][j] == 0)
+				{
+					System.out.printf("%4c", '-');
+				}
+				else
+				{
+					System.out.printf("%4d",board[i][j]);
+				}
 			}
-			else
-			{
-				System.out.printf("%4d",board[i]);
-			}
+			System.out.println();
 		}
 		System.out.println();
 	}
@@ -58,7 +62,12 @@ public class J2048View {
 	{
 		if(lose == true)
 		{
-			System.out.println("Game Over");
+			System.out.print("Game Over! Your score is: ");
 		}
+	}
+	
+	public void printFinalScore(int score)
+	{
+		System.out.println(score);
 	}
 }

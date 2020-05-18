@@ -12,7 +12,10 @@ public class J2048Model {
 	int DIM = 0;
 	int a = 0;
 	int b = 0;
-	int spawnSpace = 0;
+	int c = 0;
+	int d = 0;
+	int spawnSpaceRow = 0;
+	int spawnSpaceCol = 0;
 	int spawnVal = 0;
 	// Constructors
 	public J2048Model(int dim)
@@ -27,7 +30,7 @@ public class J2048Model {
 	// Methods
 	// Fill board with two 2s in random locations.
 	//initializes board
-	public void init(int[] board)
+	public void init(int[][] board)
 	{
 		while(a == b) 
 		{
@@ -35,38 +38,43 @@ public class J2048Model {
 			b = (int)(Math.random() * DIM);
 		}
 		
-		board[a] = 2;
-		board[b] = 2;
+		c = (int)(Math.random() * DIM);
+		d = (int)(Math.random() * DIM);
+	
+		board[a][c] = 2;
+		board[b][d] = 2;
 		
 	}
 
 	// Spawn a new value in an empty location in the board.
 	// 90% of the time, it should be a 2.
 	// 10% of the time, it should be a 4.
-	public void spawn(int[] board)
+	public void spawn(int[][] board)
 	{
-		spawnSpace = (int)(Math.random() * DIM);
+		spawnSpaceRow = (int)(Math.random() * DIM);
+		spawnSpaceCol = (int)(Math.random() * DIM);
 		
-		while(board[spawnSpace] != 0)
+		while(board[spawnSpaceRow][spawnSpaceCol] != 0)
 		{
-			spawnSpace = (int)(Math.random() * DIM);
+			spawnSpaceRow = (int)(Math.random() * DIM);
+			spawnSpaceCol = (int)(Math.random() * DIM);
 		}
 		spawnVal = (int)(Math.random() * 10);
 		
 		if(spawnVal == 9)
 		{
-			board[spawnSpace] = 4;
+			board[spawnSpaceRow][spawnSpaceCol] = 4;
 		}
 		else
 		{
-			board[spawnSpace] = 2;
+			board[spawnSpaceRow][spawnSpaceCol] = 2;
 		}
 		
 	}
 	
 	//controls the movement of the pieces using w, s, a, d
 	//where I write what happens when they combine pieces
-	public void move(int[] board)
+	public void move(int[][] board)
 	{
 		int counter = 0;
 		int shift = 0;
@@ -77,80 +85,194 @@ public class J2048Model {
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Move:");
 		String move = kb.nextLine();
+		
 		if(move.equals("a"))
 		{
 			for(int i = 1; i < DIM; i++)
 			{
-				if(board[i] != 0)
+				for(int j = 0; j < DIM; j++)
 				{
-					counter = 0;
-					while((i - 1 - counter) >= 0 && board[i - 1 - counter] == 0)
+					if(board[j][i] != 0)
 					{
-						board[i - 1 - counter] = board[i - counter];
-						board[i - counter] = 0;
-						counter++;
+						counter = 0;
+						while((i - 1 - counter) >= 0 && board[j][i - 1 - counter] == 0)
+						{
+							board[j][i - 1 - counter] = board[j][i - counter];
+							board[j][i - counter] = 0;
+							counter++;
+						}
 					}
 				}
 			}
 			for(int k = 1; k < DIM; k++)
 			{
-				if(board[k] == board[k - 1])
+				for(int l = 0; l < DIM; l++)
 				{
-					board[k - 1] *= 2;
-					board[k] = 0;
-					score += board[k - 1];
+					if(board[l][k] == board[l][k - 1])
+					{
+						board[l][k - 1] *= 2;
+						board[l][k] = 0;
+						score += board[l][k - 1];
+					}	
 				}
+
 			}
-			
 			for(int i = 1; i < DIM; i++)
 			{
-				if(board[i] != 0)
+				for(int j = 0; j < DIM; j++)
 				{
-					counter = 0;
-					while((i - 1 - counter) >= 0 && board[i - 1 - counter] == 0)
+						if(board[j][i] != 0)
 					{
-						board[i - 1 - counter] = board[i - counter];
-						board[i - counter] = 0;
-						counter++;
+						counter = 0;
+						while((i - 1 - counter) >= 0 && board[j][i - 1 - counter] == 0)
+						{
+							board[j][i - 1 - counter] = board[j][i - counter];
+							board[j][i - counter] = 0;
+							counter++;
+						}
 					}
 				}
 			}
-			
+		}
+		
+		if(move.equals("w"))
+		{
+			for(int i = 1; i < DIM; i++)
+			{
+				for(int j = 0; j < DIM; j++)
+				{
+					if(board[i][j] != 0)
+					{
+						counter = 0;
+						while((i - 1 - counter) >= 0 && board[i - 1 - counter][j] == 0)
+						{
+							board[i - 1 - counter][j] = board[i - counter][j];
+							board[i - counter][j] = 0;
+							counter++;
+						}
+					}
+				}
+			}
+			for(int k = 1; k < DIM; k++)
+			{
+				for(int l = 0; l < DIM; l++)
+				{
+					if(board[k][l] == board[k - 1][l])
+					{
+						board[k - 1][l] *= 2;
+						board[k][l] = 0;
+						score += board[k - 1][l];
+					}	
+				}
+
+			}
+			for(int i = 1; i < DIM; i++)
+			{
+				for(int j = 0; j < DIM; j++)
+				{
+						if(board[i][j] != 0)
+					{
+						counter = 0;
+						while((i - 1 - counter) >= 0 && board[i - 1 - counter][j] == 0)
+						{
+							board[i - 1 - counter][j] = board[i - counter][j];
+							board[i - counter][j] = 0;
+							counter++;
+						}
+					}
+				}
+			}
 		}
 		else if(move.equals("d"))
 		{
 			for(int j = DIM - 2; j >= 0; j--)
 			{
-				if(board[j] != 0)
+				for(int i = DIM - 1; i >= 0; i--)
 				{
-					shift = 0;
-					while((j + 1 + shift) < DIM && board[j + 1 + shift] == 0)
+					if(board[i][j] != 0)
 					{
-						board[j + 1 + shift] = board[j + shift];
-						board[j + shift] = 0;
-						shift++;
+						shift = 0;
+						while((j + 1 + shift) < DIM && board[i][j + 1 + shift] == 0)
+						{
+							board[i][j + 1 + shift] = board[i][j + shift];
+							board[i][j + shift] = 0;
+							shift++;
+						}
 					}
 				}
 			}
 			for(int k = DIM - 2; k >= 0; k--)
 			{
-				if(board[k] == board[k + 1])
+				for(int l = DIM - 1; l >= 0; l--)
 				{
-					board[k + 1] *= 2;
-					board[k] = 0;
-					score += board[k + 1];
+					if(board[l][k] == board[l][k + 1])
+					{
+						board[l][k + 1] *= 2;
+						board[l][k] = 0;
+						score += board[l][k + 1];
+					}
 				}
 			}
 			for(int j = DIM - 2; j >= 0; j--)
 			{
-				if(board[j] != 0)
+				for(int i = DIM - 1; i >= 0; i--)
 				{
-					shift = 0;
-					while((j + 1 + shift) < DIM && board[j + 1 + shift] == 0)
+					if(board[i][j] != 0)
 					{
-						board[j + 1 + shift] = board[j + shift];
-						board[j + shift] = 0;
-						shift++;
+						shift = 0;
+						while((j + 1 + shift) < DIM && board[i][j + 1 + shift] == 0)
+						{
+							board[i][j + 1 + shift] = board[i][j + shift];
+							board[i][j + shift] = 0;
+							shift++;
+						}
+					}
+				}
+			}
+		}
+		else if(move.equals("s"))
+		{
+			for(int j = DIM - 2; j >= 0; j--)
+			{
+				for(int i = DIM - 1; i >= 0; i--)
+				{
+					if(board[j][i] != 0)
+					{
+						shift = 0;
+						while((j + 1 + shift) < DIM && board[j + 1 + shift][i] == 0)
+						{
+							board[j + 1 + shift][i] = board[j + shift][i];
+							board[j + shift][i] = 0;
+							shift++;
+						}
+					}
+				}
+			}
+			for(int k = DIM - 2; k >= 0; k--)
+			{
+				for(int l = DIM - 1; l >= 0; l--)
+				{
+					if(board[k][l] == board[k + 1][l])
+					{
+						board[k + 1][l] *= 2;
+						board[k][l] = 0;
+						score += board[k + 1][l];
+					}
+				}
+			}
+			for(int j = DIM - 2; j >= 0; j--)
+			{
+				for(int i = DIM - 1; i >= 0; i--)
+				{
+					if(board[j][i] != 0)
+					{
+						shift = 0;
+						while((j + 1 + shift) < DIM && board[j + 1 + shift][i] == 0)
+						{
+							board[j + 1 + shift][i] = board[j + shift][i];
+							board[j + shift][i] = 0;
+							shift++;
+						}
 					}
 				}
 			}
@@ -163,42 +285,54 @@ public class J2048Model {
 	}
 	
 	//once a tile = 2048 return boolean true
-	public boolean getWin(int[] board)
+	public boolean getWin(int[][] board)
 	{
 		for(int i = 0; i < DIM; i++)
 		{
-			if(board[i] == 2048)
+			for(int j = 0; j < DIM; j++)
 			{
-				return true;
+				if(board[i][j] == 2048)
+				{
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
 	//if no more moves return a boolean false
-	public boolean getLose(int[] board)
+	public boolean getLose(int[][] board)
 	{
 		int track = 0;
 		int equal = 0;
+		
 		for(int i = 0; i < DIM; i++)
 		{
-			if(board[i] != 0)
+			for(int j = 0; j < DIM; j++)
 			{
-				track++;
-			}
-		}
-		for(int j = 0; j < DIM - 1; j++)
-		{
-			if(board[j] != board[j + 1])
-			{
-				equal++;
+				if(board[i][j] == 0)
+				{
+					return false;
+				}
 			}
 		}
 		
-		if(equal == DIM - 1 && track == DIM)
+		for(int k = 0; k < DIM - 1; k++)
 		{
-			return true;
+			for(int l = 0; l < DIM - 1; l++)
+			{
+				if(board[l][k] == board[l + 1][k])
+				{
+					return false;
+				}
+				
+				if(board[k][l] == board[k][l + 1])
+				{
+					return false;
+				}
+			}
 		}
-		return false;
+		
+		return true;
 	}
 }
