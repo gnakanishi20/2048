@@ -72,6 +72,8 @@ public class J2048Model {
 		int shift = 0;
 		int repeat = 0;
 		int repeat2 = 0;
+		int movement = 0;
+		int movement2 = 0;
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Move:");
 		String move = kb.nextLine();
@@ -88,15 +90,32 @@ public class J2048Model {
 						board[i - counter] = 0;
 						counter++;
 					}
-					if((i - 1 - counter + repeat) >= 0 && board[i - 1 - counter + repeat] == board[i - counter + repeat])
+				}
+			}
+			for(int k = 1; k < DIM; k++)
+			{
+				if(board[k] == board[k - 1])
+				{
+					board[k - 1] *= 2;
+					board[k] = 0;
+					score += board[k - 1];
+				}
+			}
+			
+			for(int i = 1; i < DIM; i++)
+			{
+				if(board[i] != 0)
+				{
+					counter = 0;
+					while((i - 1 - counter) >= 0 && board[i - 1 - counter] == 0)
 					{
-						board[i - 1 - counter + repeat] *= 2;
-						board[i - counter + repeat] = 0;
-						score += board[i - 1 - counter + repeat];
-						repeat++;
+						board[i - 1 - counter] = board[i - counter];
+						board[i - counter] = 0;
+						counter++;
 					}
 				}
 			}
+			
 		}
 		else if(move.equals("d"))
 		{
@@ -111,12 +130,27 @@ public class J2048Model {
 						board[j + shift] = 0;
 						shift++;
 					}
-					if((j + 1 + shift - repeat2) < DIM && board[j + 1 + shift - repeat2] == board[j + shift - repeat2])
+				}
+			}
+			for(int k = DIM - 2; k >= 0; k--)
+			{
+				if(board[k] == board[k + 1])
+				{
+					board[k + 1] *= 2;
+					board[k] = 0;
+					score += board[k + 1];
+				}
+			}
+			for(int j = DIM - 2; j >= 0; j--)
+			{
+				if(board[j] != 0)
+				{
+					shift = 0;
+					while((j + 1 + shift) < DIM && board[j + 1 + shift] == 0)
 					{
-						board[j + 1 + shift - repeat2] *= 2;
-						board[j + shift - repeat2] = 0;
-						score += board[j + 1 + shift - repeat2];
-						repeat2++;
+						board[j + 1 + shift] = board[j + shift];
+						board[j + shift] = 0;
+						shift++;
 					}
 				}
 			}
@@ -146,14 +180,14 @@ public class J2048Model {
 	{
 		int counter = 0;
 		int secondCounter = 0;
-		for(int i = 0; i < DIM; i++)
+		for(int i = 0; i < DIM - 1; i++)
 		{
 			if(board[i] != 0)
 			{
 				counter++;
 			}
 		}
-		for(int j = 0; j < DIM - 1; j++)
+		for(int j = 0; j < DIM - 2; j++)
 		{
 			if(board[j] != board[j + 1])
 			{
@@ -161,7 +195,7 @@ public class J2048Model {
 			}
 		}
 		
-		if(secondCounter == DIM && counter == DIM)
+		if(secondCounter == DIM - 1 && counter == DIM)
 		{
 			return true;
 		}
