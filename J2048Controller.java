@@ -16,14 +16,15 @@ public class J2048Controller {
 		while(lose == false)
 		{
 			view.draw(board);
-			model.move(board);
-			model.spawn(board);
-			view.printScore(model.getScore());
 			if(model.getLose(board) == true)
 			{
 				view.lose(model.getLose(board));
 				lose = true;
+				break;
 			}
+			model.move(board);
+			model.spawn(board);
+			view.printScore(model.getScore());
 			view.win(model.getWin(board));
 		}
 	}

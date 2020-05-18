@@ -178,24 +178,24 @@ public class J2048Model {
 	//if no more moves return a boolean false
 	public boolean getLose(int[] board)
 	{
-		int counter = 0;
-		int secondCounter = 0;
-		for(int i = 0; i < DIM - 1; i++)
+		int track = 0;
+		int equal = 0;
+		for(int i = 0; i < DIM; i++)
 		{
 			if(board[i] != 0)
 			{
-				counter++;
+				track++;
 			}
 		}
-		for(int j = 0; j < DIM - 2; j++)
+		for(int j = 0; j < DIM - 1; j++)
 		{
 			if(board[j] != board[j + 1])
 			{
-				secondCounter++;
+				equal++;
 			}
 		}
 		
-		if(secondCounter == DIM - 1 && counter == DIM)
+		if(equal == DIM - 1 && track == DIM)
 		{
 			return true;
 		}
