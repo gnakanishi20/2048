@@ -20,7 +20,6 @@ public class J2048View {
 		J2048View view = new J2048View(DIM);
 	}
 	
-	
 	// Iterate over each element of board and print its value to the screen.
 	// If the value is 0, print a "–" instead.
 	public void draw(int[][] board)
