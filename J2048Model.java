@@ -4,7 +4,6 @@
 // spawns a new piece every time the board is moved.
 // The Model also moves the pieces on the board and
 // determines if the game has been won.
-import java.util.Scanner;
 
 public class J2048Model {
 	// Instance variables
@@ -74,7 +73,7 @@ public class J2048Model {
 	
 	//controls the movement of the pieces using w, s, a, d
 	//where I write what happens when they combine pieces
-	public void move(int[][] board)
+	public void move(int[][] board, String dirrection)
 	{
 		int counter = 0;
 		int shift = 0;
@@ -82,9 +81,10 @@ public class J2048Model {
 		int repeat2 = 0;
 		int movement = 0;
 		int movement2 = 0;
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Move:");
-		String move = kb.nextLine();
+		// Scanner kb = new Scanner(System.in);
+		// System.out.println("Move:");
+		// String move = kb.nextLine();
+		String move = dirrection;
 		
 		if(move.equals("a"))
 		{

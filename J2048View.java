@@ -3,6 +3,7 @@
 //This class interacts with the user by printing the board to
 // the screen along with the current score. It is the only class
 // that should System.out.print(). The View should not talk to the Model.
+import java.util.Scanner;
 
 public class J2048View {
 	// Instance variables
@@ -48,6 +49,19 @@ public class J2048View {
 		System.out.println("your current score is:" + score);
 	}
 	
+	public String askMove()
+	{
+		String bank = "a, s, d, w";
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Move:");
+		String move = kb.nextLine();
+		while(!bank.contains(move))
+		{
+			System.out.println("Move entry must be either w, s, a, d:");
+			move = kb.nextLine();
+		}
+		return move;
+	}
 	//prints if you win or not 
 	public void win(boolean win)
 	{

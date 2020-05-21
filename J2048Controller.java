@@ -23,7 +23,7 @@ public class J2048Controller {
 				lose = true;
 				break;
 			}
-			model.move(board);
+			model.move(board, view.askMove());
 			model.spawn(board);
 			view.printScore(model.getScore());
 			view.win(model.getWin(board));
